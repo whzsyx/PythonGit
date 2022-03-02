@@ -1,5 +1,5 @@
 
-const $ = new Env("µçÊÓ¼Ò");
+const $ = new Env("ç”µè§†å®¶");
 const notify = $.isNode() ? require('./sendNotify') : '';
 message = ""
 let dsj_header= $.isNode() ? (process.env.dsj_header ? process.env.dsj_header : "") : ($.getdata('dsj_header') ? $.getdata('dsj_header') : "")
@@ -19,8 +19,8 @@ var time = Date.parse( new Date() ).toString();
  }
 
 if (!dsj_header) {
-     $.msg($.name, '¡¾ÌáÊ¾¡¿Ã»ÓĞµçÊÓ¼Òcookie£¬»ñÈ¡cookie£¬ÔÙÅÜÒ»´Î½Å±¾', '²»ÖªµÀËµÉ¶ºÃ', {
-         "open-url": "¸øÄúÅü¸ö²æ°É"
+     $.msg($.name, 'ã€æç¤ºã€‘æ²¡æœ‰ç”µè§†å®¶cookieï¼Œè·å–cookieï¼Œå†è·‘ä¸€æ¬¡è„šæœ¬', 'ä¸çŸ¥é“è¯´å•¥å¥½', {
+         "open-url": "ç»™æ‚¨åŠˆä¸ªå‰å§"
      });
      $.done()
  }
@@ -32,7 +32,7 @@ if (!dsj_header) {
  }
  else if (process.env.dsj_header && process.env.dsj_header.indexOf('@') > -1) {
             dsj_headerArr = process.env.dsj_header.split('@');
-            console.log(`ÄúÑ¡ÔñµÄÊÇÓÃ"@"¸ô¿ª\n`)
+            console.log(`æ‚¨é€‰æ‹©çš„æ˜¯ç”¨"@"éš”å¼€\n`)
  }
  else {
             dsj_headers = [process.env.dsj_header]
@@ -46,11 +46,11 @@ if (!dsj_header) {
 
 
 !(async () => {
-        console.log(`¹²${dsj_headerArr.length}¸öcookie`)
+        console.log(`å…±${dsj_headerArr.length}ä¸ªcookie`)
 	        for (let k = 0; k < dsj_headerArr.length; k++) {
                 $.message = ""
                 dsj_header1 = dsj_headerArr[k]
-                console.log(`--------µÚ ${k + 1} ¸öÕËºÅÈÎÎñÖĞ--------\n`)
+                console.log(`--------ç¬¬ ${k + 1} ä¸ªè´¦å·ä»»åŠ¡ä¸­--------\n`)
 
                     await dsj_rwzt();
             await signin()
@@ -64,13 +64,13 @@ if (!dsj_header) {
                 await lhz()
                 await $.wait(60000)
             }
-            await tasks(); // ÈÎÎñ×´Ì¬
+            await tasks(); // ä»»åŠ¡çŠ¶æ€
             await wx_tasks()
-            await getGametime(); // ÓÎÏ·Ê±³¤
-            await dsj_getinfo()// ÓÃ»§ĞÅÏ¢
-            //await coinlist(); //×Ü¼Æ
-            //await total(); // ½ğ±Ò×´Ì¬
-            await cash(); // ÏÖ½ğ×´Ì¬
+            await getGametime(); // æ¸¸æˆæ—¶é•¿
+            await dsj_getinfo()// ç”¨æˆ·ä¿¡æ¯
+            //await coinlist(); //æ€»è®¡
+            //await total(); // é‡‘å¸çŠ¶æ€
+            await cash(); // ç°é‡‘çŠ¶æ€
 
 
                 console.log("\n\n")
@@ -80,7 +80,7 @@ if (!dsj_header) {
     .finally(() => $.done())
 
 
-//×Ü¼Æ
+//æ€»è®¡
 function coinlist() {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
@@ -89,7 +89,7 @@ function coinlist() {
                 headers: JSON.parse(dsj_header1),
             }
             $.get(url, (error, response, data) => {
-                //console.log(`½ğ±ÒÁĞ±í: ${data}`)
+                //console.log(`é‡‘å¸åˆ—è¡¨: ${data}`)
                 let result = JSON.parse(data)
                 let onlamount = 0,
                     vdamount = 0,
@@ -97,61 +97,61 @@ function coinlist() {
                     todaysign = 0;
                 try {
                     for (i = 0; i < result.data.length && result.data[i].ctime >= time; i++) {
-                        if (result.data[i].from == "ÁìÈ¡×ßÂ·½ğ±Ò") {
-                            detail += `¡¾×ßÂ·ÈÎÎñ¡¿? »ñµÃ½ğ±Ò` + result.data[i].amount + '\n'
+                        if (result.data[i].from == "é¢†å–èµ°è·¯é‡‘å¸") {
+                            detail += `ã€èµ°è·¯ä»»åŠ¡ã€‘? è·å¾—é‡‘å¸` + result.data[i].amount + '\n'
                         }
-                        if (result.data[i].from == "ÁìÈ¡Ë¯¾õ½ğ±Ò") {
-                            detail += `¡¾Ë¯¾õÈÎÎñ¡¿? »ñµÃ½ğ±Ò` + result.data[i].amount + '\n'
+                        if (result.data[i].from == "é¢†å–ç¡è§‰é‡‘å¸") {
+                            detail += `ã€ç¡è§‰ä»»åŠ¡ã€‘? è·å¾—é‡‘å¸` + result.data[i].amount + '\n'
                         }
-                        if (result.data[i].from == "ÊÖ»ú·ÖÏí") {
-                            detail += `¡¾·ÖÏíÈÎÎñ¡¿? »ñµÃ½ğ±Ò` + result.data[i].amount + '\n'
+                        if (result.data[i].from == "æ‰‹æœºåˆ†äº«") {
+                            detail += `ã€åˆ†äº«ä»»åŠ¡ã€‘? è·å¾—é‡‘å¸` + result.data[i].amount + '\n'
                         }
-                        if (result.data[i].from == "Ë«¶Ë»îÔ¾") {
-                            detail += `¡¾Ë«¶Ë»îÔ¾¡¿? »ñµÃ½ğ±Ò` + result.data[i].amount + '\n'
+                        if (result.data[i].from == "åŒç«¯æ´»è·ƒ") {
+                            detail += `ã€åŒç«¯æ´»è·ƒã€‘? è·å¾—é‡‘å¸` + result.data[i].amount + '\n'
                         }
-                        if (result.data[i].from == "²¥·ÅÈÎÎñ") {
-                            detail += `¡¾²¥·ÅÈÎÎñ¡¿? »ñµÃ½ğ±Ò` + result.data[i].amount + '\n'
+                        if (result.data[i].from == "æ’­æ”¾ä»»åŠ¡") {
+                            detail += `ã€æ’­æ”¾ä»»åŠ¡ã€‘? è·å¾—é‡‘å¸` + result.data[i].amount + '\n'
                         }
-                        if (result.data[i].from == "ÁìÈ¡¹Ï·Ö½ğ±Ò") {
-                            detail += `¡¾¹Ï·Ö½ğ±Ò¡¿? »ñµÃ½ğ±Ò` + result.data[i].amount + '\n'
+                        if (result.data[i].from == "é¢†å–ç“œåˆ†é‡‘å¸") {
+                            detail += `ã€ç“œåˆ†é‡‘å¸ã€‘? è·å¾—é‡‘å¸` + result.data[i].amount + '\n'
                         }
-                        if (result.data[i].from == "ÓÎÏ·Ê±³¤½±Àø") {
+                        if (result.data[i].from == "æ¸¸æˆæ—¶é•¿å¥–åŠ±") {
                             gamestime += result.data[i].amount
                         }
-                        if (result.data[i].from == "¼¤ÀøÊÓÆµ") {
+                        if (result.data[i].from == "æ¿€åŠ±è§†é¢‘") {
                             vdamount += result.data[i].amount
                         }
-                        if (result.data[i].from == "ÊÖ»úÔÚÏß") {
+                        if (result.data[i].from == "æ‰‹æœºåœ¨çº¿") {
                             onlamount += result.data[i].amount
                         }
-                        if (result.data[i].from == "Ç©µ½") {
+                        if (result.data[i].from == "ç­¾åˆ°") {
                             todaysign += result.data[i].amount
                         }
                     }
                     if (todaysign) {
-                        detail += `¡¾Ã¿ÈÕÇ©µ½¡¿? »ñµÃ½ğ±Ò` + todaysign + '\n'
+                        detail += `ã€æ¯æ—¥ç­¾åˆ°ã€‘? è·å¾—é‡‘å¸` + todaysign + '\n'
                     }
                     if (vdamount) {
-                        detail += `¡¾¼¤ÀøÊÓÆµ¡¿? »ñµÃ½ğ±Ò` + vdamount + '\n'
+                        detail += `ã€æ¿€åŠ±è§†é¢‘ã€‘? è·å¾—é‡‘å¸` + vdamount + '\n'
                     }
                     if (onlamount) {
-                        detail += `¡¾ÊÖ»úÔÚÏß¡¿? »ñµÃ½ğ±Ò` + onlamount + '\n'
+                        detail += `ã€æ‰‹æœºåœ¨çº¿ã€‘? è·å¾—é‡‘å¸` + onlamount + '\n'
                     }
                     if (gamestime) {
-                        detail += `¡¾ÓÎÏ·Ê±³¤¡¿? »ñµÃ½ğ±Ò` + gamestime + '\n'
+                        detail += `ã€æ¸¸æˆæ—¶é•¿ã€‘? è·å¾—é‡‘å¸` + gamestime + '\n'
                     }
                     if (i > 0) {
-                        detail += `¡¾ÈÎÎñÍ³¼Æ¡¿¹²Íê³É${i+1}´ÎÈÎÎñ??`
+                        detail += `ã€ä»»åŠ¡ç»Ÿè®¡ã€‘å…±å®Œæˆ${i+1}æ¬¡ä»»åŠ¡??`
                     }
                     $.msg($.name + `  ` + sleeping, subTitle, detail)
 
 
                 } catch (e) {
-                    console.log(`»ñÈ¡ÈÎÎñ½ğ±ÒÁĞ±íÊ§°Ü£¬´íÎó´úÂë${e}+ \nÏìÓ¦Êı¾İ:${data}`)
-                    //$.msg($.name + ` »ñÈ¡½ğ±ÒÏêÇéÊ§°Ü `, subTitle, detail)
+                    console.log(`è·å–ä»»åŠ¡é‡‘å¸åˆ—è¡¨å¤±è´¥ï¼Œé”™è¯¯ä»£ç ${e}+ \nå“åº”æ•°æ®:${data}`)
+                    //$.msg($.name + ` è·å–é‡‘å¸è¯¦æƒ…å¤±è´¥ `, subTitle, detail)
                 }
                 /*if ($.isNode()) {
-                    notify.sendNotify(`¡¾${$.name}¡¿ÕËºÅ ${i} , ${subTitle} '\n' ${detail}`)
+                    notify.sendNotify(`ã€${$.name}ã€‘è´¦å· ${i} , ${subTitle} '\n' ${detail}`)
                 }
                 return*/
                 resolve()
@@ -168,7 +168,7 @@ function total() {
             headers: JSON.parse(dsj_header1),
         }, (error, response, data) => {
             let result = JSON.parse(data)
-            console.log(`\n¡¾µ±Ç°½ğ±Ò×´Ì¬¡¿´ı¶Ò»»½ğ±Ò: ${result.data.coin}`)
+            console.log(`\nã€å½“å‰é‡‘å¸çŠ¶æ€ã€‘å¾…å…‘æ¢é‡‘å¸: ${result.data.coin}`)
             try {
                 if (result.data.tempCoin) {
                     for (i = 0; i < result.data.tempCoin.length; i++) {
@@ -198,7 +198,7 @@ function wx_tasks(tkcode) {
         resolve()
     })
 }
-//Ğ¡³ÌĞòÈÎÎñ
+//å°ç¨‹åºä»»åŠ¡
 function wx_dotask(code) {
     return new Promise((resolve, reject) => {
         let url = {
@@ -209,9 +209,9 @@ function wx_dotask(code) {
             //console.log(data)
             let result = JSON.parse(data)
             if(result.errCode == 0){
-                console.log('\n¡¾Î¢ĞÅÈÎÎñ´úÂë¡¿£º' + code + '£¬»ñµÃ½ğ±Ò:' + result.data.getCoin)
+                console.log('\nã€å¾®ä¿¡ä»»åŠ¡ä»£ç ã€‘ï¼š' + code + 'ï¼Œè·å¾—é‡‘å¸:' + result.data.getCoin)
             }else{
-              console.log('\n¡¾Î¢ĞÅÈÎÎñ´úÂë¡¿: '+code+'£¬'+result.msg)
+              console.log('\nã€å¾®ä¿¡ä»»åŠ¡ä»£ç ã€‘: '+code+'ï¼Œ'+result.msg)
             }
          resolve()
         })
@@ -228,7 +228,7 @@ function tasks(tkcode) {
         resolve()
     })
 }
-//²¥·ÅÊ±³¤
+//æ’­æ”¾æ—¶é•¿
 function dotask(code) {
     return new Promise((resolve, reject) => {
         let url = {
@@ -239,16 +239,16 @@ function dotask(code) {
             //console.log(data)
             let result = JSON.parse(data)
             if(result.errCode == 0){
-                console.log('\n¡¾ÈÎÎñ´úÂë¡¿£º' + code + '£¬»ñµÃ½ğ±Ò:' + result.data.getCoin)
+                console.log('\nã€ä»»åŠ¡ä»£ç ã€‘ï¼š' + code + 'ï¼Œè·å¾—é‡‘å¸:' + result.data.getCoin)
             }else{
-              console.log('\n¡¾ÈÎÎñ´úÂë¡¿: '+code+ '£¬'+result.msg)
+              console.log('\nã€ä»»åŠ¡ä»£ç ã€‘: '+code+ 'ï¼Œ'+result.msg)
             }
         resolve()
         })
     })
 }
 
-//ÈÎÎñÁĞ±í²é¿´£¬´ıĞŞ¸Ä
+//ä»»åŠ¡åˆ—è¡¨æŸ¥çœ‹ï¼Œå¾…ä¿®æ”¹
 function dsj_rwzt() {
   return new Promise((resolve) => {
 let url = {
@@ -261,84 +261,84 @@ let url = {
      data = JSON.parse(data)
 
      if(data.errCode==0){
-         console.log(`\n¡¾ÈÎÎñ×´Ì¬¡¿: \n`)
-         //ÌìÌì¿´ÊÓÆµÈÎÎñ8´Î
+         console.log(`\nã€ä»»åŠ¡çŠ¶æ€ã€‘: \n`)
+         //å¤©å¤©çœ‹è§†é¢‘ä»»åŠ¡8æ¬¡
          if(data.data[0].dayCompCount==8){
-             console.log(`${data.data[0].name}: ÒÑÍê³É`)
+             console.log(`${data.data[0].name}: å·²å®Œæˆ`)
              task_xiaoman = 1
          }else{
-             console.log(`${data.data[0].name}: Î´Íê³É`)
+             console.log(`${data.data[0].name}: æœªå®Œæˆ`)
              task_xiaoman = 0
          }
-         //ä¯ÀÀ¹ã¸æ×¬
+         //æµè§ˆå¹¿å‘Šèµš
           if(data.data[2].dayCompCount==5){
-            console.log(`${data.data[2].name}: ÒÑÍê³É`)
+            console.log(`${data.data[2].name}: å·²å®Œæˆ`)
             H5Page_4 = 1
           }else{
-              console.log(`${data.data[2].name}: Î´Íê³É`)
+              console.log(`${data.data[2].name}: æœªå®Œæˆ`)
             H5Page_4 = 0
           }
 
-          //²¥·ÅÈÎÎñ
+          //æ’­æ”¾ä»»åŠ¡
           if(data.data[11].dayCompCount==9){
-              console.log(`${data.data[11].name}: ÒÑÍê³É`)
+              console.log(`${data.data[11].name}: å·²å®Œæˆ`)
               playTask = 1
           }else{
-             console.log(`${data.data[11].name}: Î´Íê³É`)
+             console.log(`${data.data[11].name}: æœªå®Œæˆ`)
               playTask = 0
           }
-          //ÊÖ»ú°æ·ÖÏí
+          //æ‰‹æœºç‰ˆåˆ†äº«
           if(data.data[7].dayCompCount==1){
-              console.log(`${data.data[7].name}: ÒÑÍê³É`)
+              console.log(`${data.data[7].name}: å·²å®Œæˆ`)
               M005 =1
           }else{
-              console.log(`${data.data[7].name}: Î´Íê³É`)
+              console.log(`${data.data[7].name}: æœªå®Œæˆ`)
               M005 =0
           }
-          //Ë¢¶ÌÊÓÆµ
+          //åˆ·çŸ­è§†é¢‘
           if(data.data[12].dayCompCount==5){
-              console.log(`${data.data[12].name}: ÒÑÍê³É`)
+              console.log(`${data.data[12].name}: å·²å®Œæˆ`)
               ShortvideoPlay = 1
           }else{
-              console.log(`${data.data[12].name}: Î´Íê³É`)
+              console.log(`${data.data[12].name}: æœªå®Œæˆ`)
               ShortvideoPlay = 0
           }
-          //·ÃÎÊµã¸èÌ¨
+          //è®¿é—®ç‚¹æ­Œå°
           if(data.data[13].dayCompCount==1){
-              console.log(`${data.data[13].name}: ÒÑÍê³É`)
+              console.log(`${data.data[13].name}: å·²å®Œæˆ`)
               task_mobile_visit_song = 1
           }else{
-              console.log(`${data.data[13].name}: Î´Íê³É`)
+              console.log(`${data.data[13].name}: æœªå®Œæˆ`)
               task_mobile_visit_song = 0
           }
-          //ä¯ÀÀµçÊÓÏà²á
+          //æµè§ˆç”µè§†ç›¸å†Œ
           if(data.data[14].dayCompCount==1){
-              console.log(`${data.data[14].name}: ÒÑÍê³É`)
+              console.log(`${data.data[14].name}: å·²å®Œæˆ`)
               task_mobile_visit_album = 1
           }else{
-              console.log(`${data.data[14].name}: Î´Íê³É`)
+              console.log(`${data.data[14].name}: æœªå®Œæˆ`)
               task_mobile_visit_album = 0
           }
-          //Ïà²áÉÏµçÊÓtask_mobile_upload_album
+          //ç›¸å†Œä¸Šç”µè§†task_mobile_upload_album
           if(data.data[15].dayCompCount==1){
-              console.log(`${data.data[15].name}: ÒÑÍê³É`)
+              console.log(`${data.data[15].name}: å·²å®Œæˆ`)
               task_mobile_upload_album = 1
           }else{
-              console.log(`${data.data[15].name}: Î´Íê³É`)
+              console.log(`${data.data[15].name}: æœªå®Œæˆ`)
               task_mobile_upload_album = 0
           }
-          //¿ª¼ÒÍ¥ºÅtask_mobile_create_family
+          //å¼€å®¶åº­å·task_mobile_create_family
           if(data.data[16].dayCompCount==1){
-              console.log(`${data.data[16].name}: ÒÑÍê³É`)
+              console.log(`${data.data[16].name}: å·²å®Œæˆ`)
               task_mobile_create_family = 1
           }else{
-              console.log(`${data.data[16].name}: Î´Íê³É`)
+              console.log(`${data.data[16].name}: æœªå®Œæˆ`)
               task_mobile_create_family = 0
           }
 
 
      }else{
-         //console.log(`${data.data[2].name}: ÒÑÍê³É`)
+         //console.log(`${data.data[2].name}: å·²å®Œæˆ`)
          console.log(data)
      }
 
@@ -349,7 +349,7 @@ let url = {
     })
   })
 }
-//¿´ÊÓÆµ½±Àø
+//çœ‹è§†é¢‘å¥–åŠ±
 function video() {
     return new Promise((resolve, reject) => {
         let url = {
@@ -360,9 +360,9 @@ function video() {
             try {
                 const result = JSON.parse(data)
                 if (result.errCode === 0) {
-               console.log(`\n¡¾¿´ÊÓÆµ×¬Ç®¡¿:»ñµÃ ${result.data.getCoin} ½ğ±Ò`)
+               console.log(`\nã€çœ‹è§†é¢‘èµšé’±ã€‘:è·å¾— ${result.data.getCoin} é‡‘å¸`)
             } else {
-                console.log( `\n¡¾¿´ÊÓÆµ×¬Ç®¡¿: ${result.msg}`)
+                console.log( `\nã€çœ‹è§†é¢‘èµšé’±ã€‘: ${result.msg}`)
                 }
 
             } catch (e) {
@@ -373,7 +373,7 @@ function video() {
             })
     })
 }
-//Ç©µ½
+//ç­¾åˆ°
 function signin() {
     return new Promise((resolve, reject) => {
         let url = {
@@ -382,23 +382,23 @@ function signin() {
         }
         $.get(url, async(error, response, data) => {
             //console.log(data)
-            //{"errCode":4,"msg":"²»ÄÜÖØ¸´Ç©µ½"}
-            //if (logs) $.log(`${$.name}, Ç©µ½½á¹û: ${data}\n`)
+            //{"errCode":4,"msg":"ä¸èƒ½é‡å¤ç­¾åˆ°"}
+            //if (logs) $.log(`${$.name}, ç­¾åˆ°ç»“æœ: ${data}\n`)
             let result = JSON.parse(data)
             if (result.errCode == 0) {
-                //signinres = `\nÇ©µ½³É¹¦ `
-                console.log( `\n¡¾Ç©µ½ÊÕÒæ¡¿: ${result.data.reward[0].count} ½ğ±Ò `)
+                //signinres = `\nç­¾åˆ°æˆåŠŸ `
+                console.log( `\nã€ç­¾åˆ°æ”¶ç›Šã€‘: ${result.data.reward[0].count} é‡‘å¸ `)
                 /*var h = result.data.reward.length
                 if (h > 1) {
-                    dconsole.log( `\n¡¾Ç©µ½ÊÕÒæ¡¿` + signinres + `${result.data.reward[0].count}½ğ±Ò£¬½±Àø${result.data.reward[1].name} `)
+                    dconsole.log( `\nã€ç­¾åˆ°æ”¶ç›Šã€‘` + signinres + `${result.data.reward[0].count}é‡‘å¸ï¼Œå¥–åŠ±${result.data.reward[1].name} `)
                 } else {
-                    console.log( `\n¡¾Ç©µ½ÊÕÒæ¡¿` + signinres + `+${result.data.reward[0].count}½ğ±Ò `)
+                    console.log( `\nã€ç­¾åˆ°æ”¶ç›Šã€‘` + signinres + `+${result.data.reward[0].count}é‡‘å¸ `)
                 }*/
             } else if (result.errCode == 4) {
-                console.log(`\n¡¾Ç©µ½½á¹û¡¿ ÖØ¸´Ç©µ½ ?? `)
+                console.log(`\nã€ç­¾åˆ°ç»“æœã€‘ é‡å¤ç­¾åˆ° ?? `)
             } else if (result.errCode == 6) {
-                console.log(`\n¡¾Ç©µ½½á¹û¡¿ Ê§°Ü`)
-                //detail = `\nÔ­Òò: ${result.msg}`
+                console.log(`\nã€ç­¾åˆ°ç»“æœã€‘ å¤±è´¥`)
+                //detail = `\nåŸå› : ${result.msg}`
                 /*if ($.isNode()) {
                     await notify.sendNotify($.name, subTitle + '\n' + detail)
                 }
@@ -409,7 +409,7 @@ function signin() {
     })
 }
 
-//ÁìÃ÷Ìì¶î¶È
+//é¢†æ˜å¤©é¢åº¦
 function dsj_led() {
     return new Promise((resolve, reject) => {
         let url = {
@@ -451,7 +451,7 @@ async function run() {
     }
 }
 
-//Ë¯¾õÈÎÎñ
+//ç¡è§‰ä»»åŠ¡
 function sleep() {
     return new Promise((resolve, reject) => {
         let url = {
@@ -460,25 +460,25 @@ function sleep() {
         }
         $.get(url, (error, response, data) => {
             try {
-                 $.log(`Ë¯¾õÈÎÎñ: ${data}\n`)
+                 $.log(`ç¡è§‰ä»»åŠ¡: ${data}\n`)
                 let sleepres = JSON.parse(data)
                 if (sleepres.errCode == 0) {
-                    sleeping = sleepres.data.name + '±¨Ãû³É¹¦ ??'
+                    sleeping = sleepres.data.name + 'æŠ¥åæˆåŠŸ ??'
                 } else if (sleepres.errCode == 4006) {
-                    sleeping = 'Ë¯¾õÖĞ??'
+                    sleeping = 'ç¡è§‰ä¸­??'
                 } else {
                     sleeping = ''
                 }
                 resolve()
             } catch (e) {
-                $.msg($.name, `Ë¯¾õ½á¹û: Ê§°Ü`, `ËµÃ÷: ${e}`)
+                $.msg($.name, `ç¡è§‰ç»“æœ: å¤±è´¥`, `è¯´æ˜: ${e}`)
             }
-            console.log(`\n¡¾Ë¯¾õÈÎÎñ¡¿: ${sleeping}`)
+            console.log(`\nã€ç¡è§‰ä»»åŠ¡ã€‘: ${sleeping}`)
             resolve()
         })
     })
 }
-//¹Ï·Ö°ÙÍò½ğ±Ò
+//ç“œåˆ†ç™¾ä¸‡é‡‘å¸
 function CarveUp() {
     return new Promise((resolve, reject) => {
         let url = {
@@ -486,18 +486,18 @@ function CarveUp() {
             headers: JSON.parse(dsj_header1),
         }
         $.get(url, (error, response, data) => {
-             $.log(`¹Ï·Ö°ÙÍò½ğ±Ò: ${data}`)
+             $.log(`ç“œåˆ†ç™¾ä¸‡é‡‘å¸: ${data}`)
             const result = JSON.parse(data)
             if (result.errCode == 0) {
-                //detail += `¡¾½ğ±Ò¹Ï·Ö¡¿? ±¨Ãû³É¹¦\n`
-		    $.log(`½ğ±Ò¹Ï·Ö¡¿? ±¨Ãû³É¹¦\n`)
+                //detail += `ã€é‡‘å¸ç“œåˆ†ã€‘? æŠ¥åæˆåŠŸ\n`
+		    $.log(`é‡‘å¸ç“œåˆ†ã€‘? æŠ¥åæˆåŠŸ\n`)
             }
             resolve()
         })
     })
 }
 
-//¹Ï·Ö°ÙÔª
+//ç“œåˆ†ç™¾å…ƒ
 function getCUpcoin() {
     return new Promise((resolve, reject) => {
         $.get({
@@ -505,7 +505,7 @@ function getCUpcoin() {
             headers: JSON.parse(dsj_header1),
         }, (error, response, data) => {
             //console.log(data)
-             $.log(`¡¾¹Ï·Ö°ÙÍò½ğ±Ò¡¿: »ñµÃ ${data} ½ğ±Ò`)
+             $.log(`ã€ç“œåˆ†ç™¾ä¸‡é‡‘å¸ã€‘: è·å¾— ${data} é‡‘å¸`)
         })
         resolve()
     })
@@ -518,7 +518,7 @@ function walk() {
             headers: JSON.parse(dsj_header1),
         }
         $.get(url, (error, response, data) => {
-             $.log(`×ßÂ·ÈÎÎñ: ${data}\n`)
+             $.log(`èµ°è·¯ä»»åŠ¡: ${data}\n`)
             let result = JSON.parse(data)
             if (result.data.unGetCoin > 10) {
                 $.get({
@@ -538,61 +538,61 @@ function wakeup() {
             headers: JSON.parse(dsj_header1),
         }
         $.get(url, (error, response, data) => {
-            $.log(`Ë¯¾õ´ò¿¨: ${data}\n`)
+            $.log(`ç¡è§‰æ‰“å¡: ${data}\n`)
         })
         resolve()
     })
 }
 
 async function run_rw(){
-    //ÌìÌìÇ©µ½¿´ÊÓÆµÈÎÎñ8´Î
+    //å¤©å¤©ç­¾åˆ°çœ‹è§†é¢‘ä»»åŠ¡8æ¬¡
     if(task_xiaoman == 0){
-        await video()//ÌìÌìÇ©µ½¿´ÊÓÆµÈÎÎñ8´Î
+        await video()//å¤©å¤©ç­¾åˆ°çœ‹è§†é¢‘ä»»åŠ¡8æ¬¡
         await $.wait(10000);
     }
-    //ä¯ÀÀ¹ã¸æ×¬
+    //æµè§ˆå¹¿å‘Šèµš
     if(H5Page_4 == 0){
-        await dsj_ggz()//ä¯ÀÀ¹ã¸æ×¬
+        await dsj_ggz()//æµè§ˆå¹¿å‘Šèµš
         await $.wait(10000);
     }
-    //²¥·ÅÈÎÎñ
+    //æ’­æ”¾ä»»åŠ¡
     if(playTask == 0){
-        await dsj_jrydz()//½ñÈÕÔÄ¶Á×¬
+        await dsj_jrydz()//ä»Šæ—¥é˜…è¯»èµš
         await $.wait(10000);
     }
-    //ÊÖ»ú°æ·ÖÏí
+    //æ‰‹æœºç‰ˆåˆ†äº«
     if(M005 == 0){
-        await dsj_sjbfx()//ÊÖ»ú·ÖÏí
+        await dsj_sjbfx()//æ‰‹æœºåˆ†äº«
         await $.wait(10000);
     }
-    //·ÃÎÊµã¸èÌ¨
+    //è®¿é—®ç‚¹æ­Œå°
     if(task_mobile_visit_song == 0){
         await dsj_dgt()
         await $.wait(10000);
     }
-    //ä¯ÀÀµçÊÓÏà²á
+    //æµè§ˆç”µè§†ç›¸å†Œ
     if(task_mobile_visit_album == 0){
-        await dsj_fwxc()//·ÃÎÊÏà²á
+        await dsj_fwxc()//è®¿é—®ç›¸å†Œ
         await $.wait(10000);
     }
-    //Ïà²áÉÏµçÊÓtask_mobile_upload_album
+    //ç›¸å†Œä¸Šç”µè§†task_mobile_upload_album
     if(task_mobile_upload_album == 0){
-        await dsj_xcsds()//Ïà²áÉÏµçÊÓ
+        await dsj_xcsds()//ç›¸å†Œä¸Šç”µè§†
         await $.wait(10000);
     }
-    //¿ª¼ÒÍ¥ºÅtask_mobile_create_family
+    //å¼€å®¶åº­å·task_mobile_create_family
     if(task_mobile_create_family == 0){
-        await dsj_kjth() //¿ª¼ÒÍ¥ºÅ
+        await dsj_kjth() //å¼€å®¶åº­å·
         await $.wait(10000);
     }
-    //Ë¢¶ÌÊÓÆµ
+    //åˆ·çŸ­è§†é¢‘
     if(ShortvideoPlay == 0){
-        await dsj_sdsp()//Ë¢¶ÌÊÓÆµ
+        await dsj_sdsp()//åˆ·çŸ­è§†é¢‘
         await $.wait(10000);
     }
 
 }
-//ä¯ÀÀ¹ã¸æ×¬
+//æµè§ˆå¹¿å‘Šèµš
 function dsj_ggz() {
     return new Promise((resolve, reject) => {
         $.get({
@@ -600,19 +600,19 @@ function dsj_ggz() {
             headers: JSON.parse(dsj_header1),
         }, async(error, response, data) => {
             //console.log(data)
-            //{"errCode":4,"msg":"²»ÄÜÖØ¸´Ç©µ½"}
-            //if (logs) $.log(`${$.name}, Ç©µ½½á¹û: ${data}\n`)
+            //{"errCode":4,"msg":"ä¸èƒ½é‡å¤ç­¾åˆ°"}
+            //if (logs) $.log(`${$.name}, ç­¾åˆ°ç»“æœ: ${data}\n`)
             let result = JSON.parse(data)
             if (result.errCode == 0) {
-                console.log(`\n¡¾ä¯ÀÀ¹ã¸æ×¬¡¿:»ñµÃ ${result.data.getCoin} ½ğ±Ò`)
+                console.log(`\nã€æµè§ˆå¹¿å‘Šèµšã€‘:è·å¾— ${result.data.getCoin} é‡‘å¸`)
             } else {
-               console.log(`\n¡¾ä¯ÀÀ¹ã¸æ×¬¡¿: ${result.msg}`)
+               console.log(`\nã€æµè§ˆå¹¿å‘Šèµšã€‘: ${result.msg}`)
             }
             resolve()
         })
     })
 }
-//½ñÈÕÔÄ¶Á×¬
+//ä»Šæ—¥é˜…è¯»èµš
 function dsj_jrydz() {
     return new Promise((resolve, reject) => {
         $.get({
@@ -620,19 +620,19 @@ function dsj_jrydz() {
             headers: JSON.parse(dsj_header1),
         }, async(error, response, data) => {
             //console.log(data)
-            //{"errCode":4,"msg":"²»ÄÜÖØ¸´Ç©µ½"}
-            //if (logs) $.log(`${$.name}, Ç©µ½½á¹û: ${data}\n`)
+            //{"errCode":4,"msg":"ä¸èƒ½é‡å¤ç­¾åˆ°"}
+            //if (logs) $.log(`${$.name}, ç­¾åˆ°ç»“æœ: ${data}\n`)
             let result = JSON.parse(data)
             if (result.errCode == 0) {
-                console.log(`\n¡¾²¥·ÅÈÎÎñ¡¿:»ñµÃ ${result.data.getCoin} ½ğ±Ò`)
+                console.log(`\nã€æ’­æ”¾ä»»åŠ¡ã€‘:è·å¾— ${result.data.getCoin} é‡‘å¸`)
             } else {
-               console.log(`\n¡¾²¥·ÅÈÎÎñ¡¿: ${result.msg}`)
+               console.log(`\nã€æ’­æ”¾ä»»åŠ¡ã€‘: ${result.msg}`)
             }
             resolve()
         })
     })
 }
-//ÊÖ»ú°æ·ÖÏí
+//æ‰‹æœºç‰ˆåˆ†äº«
 function dsj_sjbfx() {
     return new Promise((resolve, reject) => {
         $.get({
@@ -640,20 +640,20 @@ function dsj_sjbfx() {
             headers: JSON.parse(dsj_header1),
         }, async(error, response, data) => {
             //console.log(data)
-            //{"errCode":4,"msg":"²»ÄÜÖØ¸´Ç©µ½"}
-            //if (logs) $.log(`${$.name}, Ç©µ½½á¹û: ${data}\n`)
+            //{"errCode":4,"msg":"ä¸èƒ½é‡å¤ç­¾åˆ°"}
+            //if (logs) $.log(`${$.name}, ç­¾åˆ°ç»“æœ: ${data}\n`)
             let result = JSON.parse(data)
             if (result.errCode == 0) {
-                console.log(`\n¡¾ÊÖ»ú°æ·ÖÏí¡¿:»ñµÃ ${result.data.getCoin} ½ğ±Ò`)
+                console.log(`\nã€æ‰‹æœºç‰ˆåˆ†äº«ã€‘:è·å¾— ${result.data.getCoin} é‡‘å¸`)
             } else {
-               console.log(`\n¡¾ÊÖ»ú°æ·ÖÏí¡¿: ${result.msg}`)
+               console.log(`\nã€æ‰‹æœºç‰ˆåˆ†äº«ã€‘: ${result.msg}`)
             }
             resolve()
         })
     })
 }
 
-//·ÃÎÊµã¸èÌ¨
+//è®¿é—®ç‚¹æ­Œå°
 function dsj_dgt() {
     return new Promise((resolve, reject) => {
         let url = {
@@ -663,11 +663,11 @@ function dsj_dgt() {
         $.get(url, (error, response, data) => {
             //console.log(data)
             let result = JSON.parse(data)
-            //console.log(`\n¡¾½ñÈÕÔÄ¶Á×¬¡¿: ³É¹¦`)
+            //console.log(`\nã€ä»Šæ—¥é˜…è¯»èµšã€‘: æˆåŠŸ`)
             if(result.errCode == 0){
-                console.log(`\n¡¾·ÃÎÊµã¸èÌ¨¡¿:»ñµÃ ${result.data.getCoin} ½ğ±Ò`)
+                console.log(`\nã€è®¿é—®ç‚¹æ­Œå°ã€‘:è·å¾— ${result.data.getCoin} é‡‘å¸`)
             }else{
-              console.log(`\n¡¾·ÃÎÊµã¸èÌ¨¡¿: ${result.msg}`)
+              console.log(`\nã€è®¿é—®ç‚¹æ­Œå°ã€‘: ${result.msg}`)
             }
 
         resolve()
@@ -675,7 +675,7 @@ function dsj_dgt() {
     })
 }
 
-//·ÃÎÊÏà²á
+//è®¿é—®ç›¸å†Œ
 function dsj_fwxc() {
     return new Promise((resolve, reject) => {
         let url = {
@@ -686,9 +686,9 @@ function dsj_fwxc() {
             //console.log(data)
             let result = JSON.parse(data)
             if(result.errCode == 0){
-                console.log(`\n¡¾·ÃÎÊÏà²á¡¿:»ñµÃ ${result.data.getCoin} ½ğ±Ò`)
+                console.log(`\nã€è®¿é—®ç›¸å†Œã€‘:è·å¾— ${result.data.getCoin} é‡‘å¸`)
             }else{
-              console.log(`\n¡¾·ÃÎÊÏà²á¡¿: ${result}`)
+              console.log(`\nã€è®¿é—®ç›¸å†Œã€‘: ${result}`)
             }
 
         resolve()
@@ -696,7 +696,7 @@ function dsj_fwxc() {
     })
 }
 
-//Ïà²áÉÏµçÊÓ
+//ç›¸å†Œä¸Šç”µè§†
 function dsj_xcsds() {
     return new Promise((resolve, reject) => {
         let url = {
@@ -707,16 +707,16 @@ function dsj_xcsds() {
             //console.log(data)
             let result = JSON.parse(data)
             if(result.errCode == 0){
-                console.log(`\n¡¾Ïà²áÉÏµçÊÓ¡¿:»ñµÃ ${result.data.getCoin} ½ğ±Ò`)
+                console.log(`\nã€ç›¸å†Œä¸Šç”µè§†ã€‘:è·å¾— ${result.data.getCoin} é‡‘å¸`)
             }else{
-              console.log(`\n¡¾Ïà²áÉÏµçÊÓ¡¿: ${result.msg}`)
+              console.log(`\nã€ç›¸å†Œä¸Šç”µè§†ã€‘: ${result.msg}`)
             }
 
         resolve()
         })
     })
 }
-//¿ª¼ÒÍ¥ºÅ
+//å¼€å®¶åº­å·
 function dsj_kjth() {
     return new Promise((resolve, reject) => {
         let url = {
@@ -727,9 +727,9 @@ function dsj_kjth() {
             //console.log(data)
             let result = JSON.parse(data)
             if(result.errCode == 0){
-                console.log(`\n¡¾¿ª¼ÒÍ¥ºÅ¡¿:»ñµÃ ${result.data.getCoin} ½ğ±Ò`)
+                console.log(`\nã€å¼€å®¶åº­å·ã€‘:è·å¾— ${result.data.getCoin} é‡‘å¸`)
             }else{
-              console.log(`\n¡¾¿ª¼ÒÍ¥ºÅ¡¿: ${result.msg}`)
+              console.log(`\nã€å¼€å®¶åº­å·ã€‘: ${result.msg}`)
             }
 
         resolve()
@@ -737,7 +737,7 @@ function dsj_kjth() {
     })
 }
 
-//Ë¢¶ÌÊÓÆµ
+//åˆ·çŸ­è§†é¢‘
 function dsj_sdsp() {
     return new Promise((resolve, reject) => {
         let url = {
@@ -748,9 +748,9 @@ function dsj_sdsp() {
             //console.log(data)
             let result = JSON.parse(data)
             if(result.errCode == 0){
-                console.log(`\n¡¾Ë¢¶ÌÊÓÆµ¡¿:»ñµÃ ${result.data.getCoin} ½ğ±Ò`)
+                console.log(`\nã€åˆ·çŸ­è§†é¢‘ã€‘:è·å¾— ${result.data.getCoin} é‡‘å¸`)
             }else{
-              console.log(`\n¡¾Ë¢¶ÌÊÓÆµ¡¿: ${result.msg}`)
+              console.log(`\nã€åˆ·çŸ­è§†é¢‘ã€‘: ${result.msg}`)
             }
 
         resolve()
@@ -758,7 +758,7 @@ function dsj_sdsp() {
     })
 }
 
-//ÁĞ³öÆøÅİĞÅÏ¢
+//åˆ—å‡ºæ°”æ³¡ä¿¡æ¯
 function dsj_lqp() {
     return new Promise((resolve, reject) => {
         $.get({
@@ -766,12 +766,12 @@ function dsj_lqp() {
             headers: JSON.parse(dsj_header1),
         }, async(error, response, data) => {
             //console.log(data)
-            //{"errCode":4,"msg":"²»ÄÜÖØ¸´Ç©µ½"}
-            //if (logs) $.log(`${$.name}, Ç©µ½½á¹û: ${data}\n`)
+            //{"errCode":4,"msg":"ä¸èƒ½é‡å¤ç­¾åˆ°"}
+            //if (logs) $.log(`${$.name}, ç­¾åˆ°ç»“æœ: ${data}\n`)
             let result = JSON.parse(data)
             if (result.errCode == 0) {
                 if(!result.data.tempCoin){
-                    console.log(`\n¡¾${$.name}¡¿: Ê×Ò³Ã»ÓĞÆøÅİÁË`)
+                    console.log(`\nã€${$.name}ã€‘: é¦–é¡µæ²¡æœ‰æ°”æ³¡äº†`)
                 }else{
                   for(let a=0;a<result.data.tempCoin.length;a++){
                   await dsj_dqp(result.data.tempCoin[a].id)
@@ -780,9 +780,9 @@ function dsj_lqp() {
                 }
 
             } else {
-               //console.log(`\n¡¾${$.name}¡¿: ${result.msg}`
-                //subTitle = `¡¾¿´ÊÓÆµ×¬Ç®¡¿ Ê§°Ü`
-                /*detail = `Ô­Òò: ${result.msg}`
+               //console.log(`\nã€${$.name}ã€‘: ${result.msg}`
+                //subTitle = `ã€çœ‹è§†é¢‘èµšé’±ã€‘ å¤±è´¥`
+                /*detail = `åŸå› : ${result.msg}`
                 if ($.isNode()) {
                     await notify.sendNotify($.name, subTitle + '\n' + detail)
                 }
@@ -792,7 +792,7 @@ function dsj_lqp() {
         })
     })
 }
- //µãÆøÅİ
+ //ç‚¹æ°”æ³¡
 function dsj_dqp(code) {
     return new Promise((resolve, reject) => {
         $.get({
@@ -801,13 +801,13 @@ function dsj_dqp(code) {
         }, async(error, response, data) => {
             //console.log(data)
             let result = JSON.parse(data)
-            console.log(`\n¡¾${$.name}¡¿: µãÆøÅİ³É¹¦`)
+            console.log(`\nã€${$.name}ã€‘: ç‚¹æ°”æ³¡æˆåŠŸ`)
             resolve()
         })
     })
 }
 
-//ÓÎÏ·Ê±³¤
+//æ¸¸æˆæ—¶é•¿
 function getGametime() {
     return new Promise((resolve, reject) => {
         let url = {
@@ -815,13 +815,13 @@ function getGametime() {
             headers: JSON.parse(dsj_header1),
         }
         $.get(url, (error, response, data) => {
-             $.log(`ÓÎÏ·Ê±³¤: ${data}\n`)
+             $.log(`æ¸¸æˆæ—¶é•¿: ${data}\n`)
         })
         resolve()
     })
 }
 
-//ÓÃ»§ĞÅÏ¢£¬µ÷ÓÃµÄº¯Êı´ıĞŞ¸Ä
+//ç”¨æˆ·ä¿¡æ¯ï¼Œè°ƒç”¨çš„å‡½æ•°å¾…ä¿®æ”¹
 function dsj_getinfo() {
     return new Promise((resolve, reject) => {
         let url = {
@@ -835,7 +835,7 @@ function dsj_getinfo() {
                 headImgUrl=result.data.headImgUrl
                 dsj_info()
             }else{
-              console.log(`\n¡¾µçÊÓ¼ÒÌáÊ¾¡¿: ${result.msg}`)
+              console.log(`\nã€ç”µè§†å®¶æç¤ºã€‘: ${result.msg}`)
             }
 
         resolve()
@@ -854,7 +854,7 @@ function dsj_info() {
             if(result.errCode == 0){
 
             }else{
-              //console.log(`\n¡¾µçÊÓ¼ÒÌáÊ¾¡¿: ${result.msg}`)
+              //console.log(`\nã€ç”µè§†å®¶æç¤ºã€‘: ${result.msg}`)
             }
 
         resolve()
@@ -875,41 +875,41 @@ async function getdsj_header() {
 
         if (dsj_header) {
             if (dsj_header.indexOf(userid) > -1) {
-                $.log("´ËcookieÒÑ´æÔÚ£¬±¾´ÎÌø¹ı")
+                $.log("æ­¤cookieå·²å­˜åœ¨ï¼Œæœ¬æ¬¡è·³è¿‡")
             } else if (dsj_header.indexOf(userid) === -1) {
                 dsj_headers = dsj_header + "@" + bodyVal2;
                 console.log(bodyVal2)
                 $.setdata(dsj_headers, 'dsj_header');
-                $.log(`${$.name}»ñÈ¡cookie: ³É¹¦, dsj_headers: ${bodyVal}`);
+                $.log(`${$.name}è·å–cookie: æˆåŠŸ, dsj_headers: ${bodyVal}`);
                 bodys = dsj_headers.split("@")
-                // $.msg($.name, "»ñÈ¡µÚ" + bodys.length + "¸öÔÄ¶ÁÇëÇó: ³É¹¦??", ``)
+                // $.msg($.name, "è·å–ç¬¬" + bodys.length + "ä¸ªé˜…è¯»è¯·æ±‚: æˆåŠŸ??", ``)
             }
         } else {
             $.setdata(bodyVal2, 'dsj_header');
             console.log(bodyVal2)
-            $.log(`${$.name}»ñÈ¡cookie: ³É¹¦, dsj_headers: ${bodyVal}`);
-            $.msg($.name, `»ñÈ¡µÚÒ»¸öcookie: ³É¹¦??`, ``)
+            $.log(`${$.name}è·å–cookie: æˆåŠŸ, dsj_headers: ${bodyVal}`);
+            $.msg($.name, `è·å–ç¬¬ä¸€ä¸ªcookie: æˆåŠŸ??`, ``)
         }
     }
 
   }
 
-  //ÏÖ½ğÏêÇé
+  //ç°é‡‘è¯¦æƒ…
 function cash() {
     return new Promise((resolve, reject) => {
         $.get({
             url: `${dianshijia_API}/cash/info`,
             headers: JSON.parse(dsj_header1),
         }, (error, response, data) => {
-            //if (logs) $.log(`ÏÖ½ğ: ${data}\n`)
+            //if (logs) $.log(`ç°é‡‘: ${data}\n`)
             let cashresult = JSON.parse(data)
             if (cashresult.errCode == "0") {
-               console.log(`\n¡¾µ±Ç°ÏÖ½ğ×´Ì¬¡¿×ÜÏÖ½ğ: ${cashresult.data.amount/100} , ÌáÏÖ¶î¶È: ${cashresult.data.withdrawalQuota/100}`)
-                //subTitle += `\n¡¾ÕËºÅ ${k+1} ÏÖ½ğ×´Ì¬¡¿×ÜÏÖ½ğ: ${cashresult.data.amount/100} , ÌáÏÖ¶î¶È: ${cashresult.data.withdrawalQuota/100}`
+               console.log(`\nã€å½“å‰ç°é‡‘çŠ¶æ€ã€‘æ€»ç°é‡‘: ${cashresult.data.amount/100} , æç°é¢åº¦: ${cashresult.data.withdrawalQuota/100}`)
+                //subTitle += `\nã€è´¦å· ${k+1} ç°é‡‘çŠ¶æ€ã€‘æ€»ç°é‡‘: ${cashresult.data.amount/100} , æç°é¢åº¦: ${cashresult.data.withdrawalQuota/100}`
                 //cashtotal = cashresult.data.totalWithdrawn / 100
                 /*zh=i
                 if ($.isNode()) {
-                 notify.sendNotify($.name,'ÕËºÅ: '+i+'\n'+ subTitle + '\n')
+                 notify.sendNotify($.name,'è´¦å·: '+i+'\n'+ subTitle + '\n')
                 }
                 return*/
 
@@ -919,7 +919,7 @@ function cash() {
     })
 }
 
-//Áã»¨×¬
+//é›¶èŠ±èµš
 function lhz() {
     return new Promise((resolve, reject) => {
         let url = {
@@ -930,9 +930,9 @@ function lhz() {
             //console.log(data)
             let result = JSON.parse(data)
             if(result.errCode == 0){
-                console.log('\nÔÄ¶ÁÁã»¨×¬£º' + 'ÔÄ¶Á´ÎÊı:' + result.data.dayCompCount)
+                console.log('\né˜…è¯»é›¶èŠ±èµšï¼š' + 'é˜…è¯»æ¬¡æ•°:' + result.data.dayCompCount)
             }else{
-              console.log('\n¡¾ÔÄ¶ÁÁã»¨×¬: '+result.msg)
+              console.log('\nã€é˜…è¯»é›¶èŠ±èµš: '+result.msg)
             }
         resolve()
         })
